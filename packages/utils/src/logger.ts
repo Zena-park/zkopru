@@ -34,7 +34,7 @@ export class StreamConcatenator extends Writable {
 }
 
 export const logStream = new StreamConcatenator()
-export const logger = pino({ level: 'info' }, logStream)
+export const logger = pino({ level: 'trace' }, logStream)
 
 const pinoPrettier = prettier({
   translateTime: false,

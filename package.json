@@ -48,12 +48,6 @@
     "precommit": "lint-staged && lerna run --concurrency 1 --stream precommit --since HEAD",
     "commit": "git cz"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn precommit && yarn test",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "lint-staged": {
     "linters": {
       "*.{js,jsx,ts,tsx}": [

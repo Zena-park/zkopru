@@ -84,6 +84,9 @@ export class ZkopruNode {
         logger.info(`slash result: ${result}`)
       })
       this.blockProcessor.on('processed', async proposal => {
+        logger.info(
+          ` zkopru-node >> blockProcessor >> processed : proposal.proposalNum : ${proposal.proposalNum}`,
+        )
         this.synchronizer.setLatestProcessed(proposal.proposalNum)
         if (this.synchronizer.status === NetworkStatus.FULLY_SYNCED) {
           await this.calcCanonicalBlockHeights()

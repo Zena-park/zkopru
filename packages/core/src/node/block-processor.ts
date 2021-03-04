@@ -97,7 +97,9 @@ export class BlockProcessor extends EventEmitter {
     while (this.isRunning()) {
       try {
         const unprocessed = await this.layer2.getOldestUnprocessedBlock()
-        logger.trace(`unprocessed: ${unprocessed}`)
+        if (unprocessed)
+          logger.trace(`unprocessed: ${JSON.stringify(unprocessed)}`)
+
         if (!unprocessed) {
           const latestProcessed = await this.db.read(prisma =>
             prisma.proposal.findMany({
@@ -111,14 +113,19 @@ export class BlockProcessor extends EventEmitter {
           )
           const latest = latestProcessed.pop()
           this.emit('processed', { proposalNum: latest?.proposalNum || 0 })
+
           // this.synchronizer.setLatestProcessed(latest?.proposalNum || 0)
           break
         }
         const processedProposalNum = await this.processBlock(unprocessed)
+
+        logger.info(' blockProcessor >> emit >> processed')
+
         this.emit('processed', {
           proposalNum: processedProposalNum,
           block: unprocessed.block,
         })
+
         // this.synchronizer.setLatestProcessed(processedProposalNum)
       } catch (err) {
         // TODO needs to provide roll back & resync option
@@ -141,6 +148,8 @@ export class BlockProcessor extends EventEmitter {
     proposal: Proposal
   }): Promise<number> {
     const { parent, block, proposal } = unprocessed
+
+    logger.trace(`processBlock start : ${proposal}`)
 
     if (!proposal.proposalNum || !proposal.proposedAt)
       throw Error('Invalid proposal data')
