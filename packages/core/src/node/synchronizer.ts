@@ -142,9 +142,22 @@ export class Synchronizer extends EventEmitter {
       )
         .toBN()
         .subn(1) // proposal num starts from 0
+
+      const layer1ProposedBlocksTest = Uint256.from(
+        await this.l1Contract.upstream.methods.proposedBlocks().call(),
+      )
+      logger.trace(
+        `layer1ProposedBlocksTest: ${layer1ProposedBlocksTest.toString()}`,
+      )
       logger.trace(`total proposed: ${layer1ProposedBlocks.toString(10)}`)
       logger.trace(`total processed: ${this.latestProcessed}`)
       if (layer1ProposedBlocks.eqn(this.latestProcessed || 0)) {
+        this.setStatus(NetworkStatus.FULLY_SYNCED)
+      } else if (
+        layer1ProposedBlocks.toString(10) === '-1' &&
+        this.latestProcessed === undefined
+      ) {
+        // biztiger
         this.setStatus(NetworkStatus.FULLY_SYNCED)
       } else if (layer1ProposedBlocks.ltn((this.latestProcessed || 0) + 2)) {
         this.setStatus(NetworkStatus.SYNCED)
@@ -171,6 +184,8 @@ export class Synchronizer extends EventEmitter {
   }
 
   async listenGenesis() {
+    logger.info('listenGenesis start')
+
     const numOfGenesisBlock = await this.db.read(prisma =>
       prisma.proposal.count({
         where: { proposalNum: 0 },

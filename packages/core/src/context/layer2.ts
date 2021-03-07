@@ -194,41 +194,63 @@ export class L2Chain {
     const leaves: Field[] = []
     let consumedBytes = 0
     let aggregatedFee: Field = Field.zero
-    // 1. pick mass deposits
-    const commits: MassDepositSql[] = await this.db.read(prisma =>
-      prisma.massDeposit.findMany({
-        where: { includedIn: null },
-      }),
-    )
-    commits.sort((a, b) => parseInt(a.index, 10) - parseInt(b.index, 10))
-    const pendingDeposits = await this.db.read(prisma =>
-      prisma.deposit.findMany({
-        where: { queuedAt: { in: commits.map(commit => commit.index) } },
-      }),
-    )
-    pendingDeposits.sort((a, b) => {
-      if (a.blockNumber !== b.blockNumber) {
-        return a.blockNumber - b.blockNumber
+    logger.trace(`layer2.getPendingMassDeposits start `)
+    try {
+      logger.trace(`layer2.getPendingMassDeposits pick mass deposits `)
+      // 1. pick mass deposits
+      const commits: MassDepositSql[] = await this.db.read(prisma =>
+        prisma.massDeposit.findMany({
+          where: { includedIn: null },
+        }),
+      )
+      logger.trace(
+        `layer2.getPendingMassDeposits commits ${JSON.stringify(commits)}`,
+      )
+      commits.sort((a, b) => parseInt(a.index, 10) - parseInt(b.index, 10))
+      const pendingDeposits = await this.db.read(prisma =>
+        prisma.deposit.findMany({
+          where: { queuedAt: { in: commits.map(commit => commit.index) } },
+        }),
+      )
+      logger.trace(
+        `layer2.getPendingMassDeposits pendingDeposits ${JSON.stringify(
+          pendingDeposits,
+        )}`,
+      )
+      pendingDeposits.sort((a, b) => {
+        if (a.blockNumber !== b.blockNumber) {
+          return a.blockNumber - b.blockNumber
+        }
+        if (a.transactionIndex !== b.transactionIndex) {
+          return a.transactionIndex - b.transactionIndex
+        }
+        // TODO HERE!!
+        return a.logIndex - b.logIndex
+      })
+      logger.trace(`layer2.getPendingMassDeposits this1 `)
+      leaves.push(...pendingDeposits.map(deposit => Field.from(deposit.note)))
+      consumedBytes += commits.length
+      aggregatedFee = aggregatedFee.add(
+        pendingDeposits.reduce((prev, item) => prev.add(item.fee), Field.zero),
+      )
+      logger.trace(`layer2.getPendingMassDeposits this2 ${aggregatedFee}`)
+      return {
+        massDeposits: commits.map(commit => ({
+          merged: Bytes32.from(commit.merged),
+          fee: Uint256.from(commit.fee),
+        })),
+        leaves,
+        totalFee: aggregatedFee,
+        calldataSize: consumedBytes,
       }
-      if (a.transactionIndex !== b.transactionIndex) {
-        return a.transactionIndex - b.transactionIndex
+    } catch (error) {
+      logger.trace(`layer2.getPendingMassDeposits error ${error}`)
+      return {
+        massDeposits: [],
+        leaves,
+        totalFee: aggregatedFee,
+        calldataSize: consumedBytes,
       }
-      // TODO HERE!!
-      return a.logIndex - b.logIndex
-    })
-    leaves.push(...pendingDeposits.map(deposit => Field.from(deposit.note)))
-    consumedBytes += commits.length
-    aggregatedFee = aggregatedFee.add(
-      pendingDeposits.reduce((prev, item) => prev.add(item.fee), Field.zero),
-    )
-    return {
-      massDeposits: commits.map(commit => ({
-        merged: Bytes32.from(commit.merged),
-        fee: Uint256.from(commit.fee),
-      })),
-      leaves,
-      totalFee: aggregatedFee,
-      calldataSize: consumedBytes,
     }
   }
 

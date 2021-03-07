@@ -18,7 +18,9 @@ import { GeneratorBase } from '../interfaces/generator-base'
 
 export class BlockGenerator extends GeneratorBase {
   async genBlock(): Promise<Block> {
+    logger.trace(`genBlock start`)
     if (!this.context.gasPrice) {
+      logger.error(`coordinator.js: Gas price is not synced`)
       throw Error('coordinator.js: Gas price is not synced')
     }
 
@@ -31,6 +33,7 @@ export class BlockGenerator extends GeneratorBase {
     const pendingMassDeposits = await layer2.getPendingMassDeposits()
     consumedBytes += pendingMassDeposits.calldataSize
     aggregatedFee = aggregatedFee.add(pendingMassDeposits.totalFee)
+    logger.info(`aggregatedFee ${aggregatedFee}`)
 
     // 2. pick transactions
     const pendingTxs = await this.context.txPool.pickTxs(
@@ -41,6 +44,8 @@ export class BlockGenerator extends GeneratorBase {
     aggregatedFee = aggregatedFee.add(
       txs.map(tx => tx.fee).reduce((prev, fee) => prev.add(fee), Field.zero),
     )
+    logger.info(`txs ${txs}`)
+
     // TODO 3 make sure every nullifier is unique and not used before
     // * if there exists invalid transactions, remove them from the tx pool and try genBlock recursively
     const utxos = txs

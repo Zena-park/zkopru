@@ -14,9 +14,11 @@ import { IWithdrawalTreeValidator } from "./interfaces/validators/IWithdrawalTre
 import { INullifierTreeValidator } from "./interfaces/validators/INullifierTreeValidator.sol";
 import { ITxValidator } from "./interfaces/validators/ITxValidator.sol";
 
+import { ZkopruTokamakStorage } from "../connection/ZkopruTokamakStorage.sol";
+
 /* solium-disable */
 
-contract Proxy is Storage {
+contract Proxy is Storage, ZkopruTokamakStorage {
     /**
      * @notice This proxies supports the following interfaces
      *          - ICoordinatable.sol

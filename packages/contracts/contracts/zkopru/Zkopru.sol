@@ -10,8 +10,8 @@ import { SNARK } from "./libraries/SNARK.sol";
 import { Blockchain, Header, Types } from "./libraries/Types.sol";
 import { Pairing, G1Point, G2Point } from "./libraries/Pairing.sol";
 import { Hash } from "./libraries/Hash.sol";
-
-contract Zkopru is Proxy, Reader, ISetupWizard {
+import { TokamakConnector } from "../connection/TokamakConnector.sol";
+contract Zkopru is Proxy, Reader, ISetupWizard, TokamakConnector {
     using Types for Header;
     using Types for Blockchain;
 
@@ -161,4 +161,5 @@ contract Zkopru is Proxy, Reader, ISetupWizard {
             parentBlock
         );
     }
+
 }

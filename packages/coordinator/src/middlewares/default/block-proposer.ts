@@ -35,6 +35,8 @@ export class BlockProposer extends ProposerBase {
       return undefined
     }
 
+    logger.trace(`block.header ${JSON.stringify(block.header)}`)
+
     const bytes = Buffer.concat([
       serializeHeader(block.header),
       serializeBody(block.body),

@@ -6,6 +6,7 @@ import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { IERC165 } from "@openzeppelin/contracts/introspection/IERC165.sol";
 import { Hash } from "../libraries/Hash.sol";
 import { IConsensusProvider } from "../../consensus/interfaces/IConsensusProvider.sol";
+import { IZkopruTokamakConnector } from "../../interfaces/IZkopruTokamakConnector.sol";
 import {
     Header,
     Proposer,
@@ -72,9 +73,11 @@ contract Coordinatable is Storage {
         // The message sender address should be same with the proposer address
         require(_block.header.proposer == msg.sender, "Coordinator account is different with the message sender");
         Proposer storage proposer = Storage.chain.proposers[msg.sender];
+
         // Check permission
         IConsensusProvider(consensusProvider).openRoundIfNeeded();
         require(isProposable(msg.sender), "Not allowed to propose");
+
         // Duplicated proposal is not allowed
         bytes32 checksum = keccak256(data);
         require(Storage.chain.proposals[checksum].headerHash == bytes32(0), "Already submitted");
@@ -255,14 +258,19 @@ contract Coordinatable is Storage {
      * @dev You can override this function to implement your own consensus logic.
      * @param proposerAddr Coordinator address to check the allowance of block proposing.
      */
+     /*
     function isProposable(address proposerAddr) public view returns (bool) {
         Proposer memory  proposer = Storage.chain.proposers[proposerAddr];
         // You can add more consensus logic here
+
         if (proposer.stake >= MINIMUM_STAKE) {
             return IConsensusProvider(consensusProvider).isProposable(proposerAddr);
         } else {
             return false;
         }
+    }*/
+    function isProposable(address proposerAddr) public view returns (bool) {
+        return IZkopruTokamakConnector(address(this)).isProposableTokamak(proposerAddr);
     }
 }
 

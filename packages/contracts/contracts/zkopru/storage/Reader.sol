@@ -121,7 +121,7 @@ contract Reader is Storage {
     }
 
     /**
-     * @dev Copy of `isProposable()` in Coordinatable.sol 
+     * @dev Copy of `isProposable()` in Coordinatable.sol
      */
     function isProposable(address proposerAddr) public view returns (bool) {
         Proposer memory  proposer = Storage.chain.proposers[proposerAddr];
@@ -134,7 +134,7 @@ contract Reader is Storage {
     }
 
     /**
-     * @dev Copy of `isValidRef()` in TxValidator.sol 
+     * @dev Copy of `isValidRef()` in TxValidator.sol
      */
     function isValidRef(bytes32 l2BlockHash, uint256 ref)
     public

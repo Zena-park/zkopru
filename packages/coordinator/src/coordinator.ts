@@ -293,6 +293,9 @@ export class Coordinator extends EventEmitter {
       const isProposable = await this.layer1()
         .upstream.methods.isProposable(this.context.account.address)
         .call()
+
+      logger.trace(`layer1.isProposable : ${isProposable}`)
+
       if (isProposable) {
         await this.proposeBlock()
       } else {
@@ -309,9 +312,16 @@ export class Coordinator extends EventEmitter {
       logger.warn(`Failed to gen block: ${err}`)
       return
     }
+
+    logger.trace(`generator.genBlock : ${JSON.stringify(block)}`)
+
     try {
       const receipt = await this.middlewares.proposer.propose(block)
+
+      logger.trace(`receipt : ${JSON.stringify(receipt)}`)
+
       if (receipt?.status) {
+        logger.trace(`receipt.status : ${receipt.status}`)
         await this.context.node.synchronizer.updateStatus()
       }
     } catch (err) {

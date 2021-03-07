@@ -14,7 +14,7 @@ import { CoordinatorDashboard } from './app'
 import { DEFAULT } from './config'
 
 const main = async () => {
-  const writeStream = fs.createWriteStream('./COORDINATOR_LOG')
+  const writeStream = fs.createWriteStream(DEFAULT.logFile)
   logStream.addStream(writeStream)
   const config: Config = {} as Config
   Object.assign(config, DEFAULT)
