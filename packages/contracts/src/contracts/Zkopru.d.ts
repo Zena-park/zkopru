@@ -47,6 +47,8 @@ export class Zkopru extends Contract {
 
     WITHDRAWAL_TREE_DEPTH(): TransactionObject<string>
 
+    accumulatedReward(): TransactionObject<string>
+
     allowedMigrants(arg0: string): TransactionObject<boolean>
 
     committedDeposits(
@@ -54,6 +56,10 @@ export class Zkopru extends Contract {
     ): TransactionObject<string>
 
     consensusProvider(): TransactionObject<string>
+
+    currentFork(): TransactionObject<string>
+
+    finalizeReward(account: string): TransactionObject<void>
 
     finalized(headerHash: string | number[]): TransactionObject<boolean>
 
@@ -77,6 +83,8 @@ export class Zkopru extends Contract {
       4: string[][]
     }>
 
+    isLayer2(): TransactionObject<boolean>
+
     isProposable(proposerAddr: string): TransactionObject<boolean>
 
     isValidRef(
@@ -84,13 +92,23 @@ export class Zkopru extends Contract {
       ref: number | string,
     ): TransactionObject<boolean>
 
+    isZkopru(): TransactionObject<boolean>
+
+    l2RewardManager(): TransactionObject<string>
+
+    lastEpoch(arg0: number | string): TransactionObject<string>
+
     latest(): TransactionObject<string>
 
     latestProposalBlock(coordinator: string): TransactionObject<string>
 
+    layer2Registry(): TransactionObject<string>
+
     massDepositId(): TransactionObject<string>
 
     migrations(migrationHash: string | number[]): TransactionObject<boolean>
+
+    operator(): TransactionObject<string>
 
     owner(): TransactionObject<string>
 
@@ -106,6 +124,8 @@ export class Zkopru extends Contract {
       1: string
       2: boolean
     }>
+
+    proposeReward(account: string): TransactionObject<void>
 
     proposedBlocks(): TransactionObject<string>
 
@@ -128,6 +148,12 @@ export class Zkopru extends Contract {
 
     renounceOwnership(): TransactionObject<void>
 
+    reward(account: string): TransactionObject<string>
+
+    rewards(): TransactionObject<string>
+
+    seigManager(): TransactionObject<string>
+
     slashed(headerHash: string | number[]): TransactionObject<boolean>
 
     stagedDeposits(): TransactionObject<{
@@ -139,11 +165,17 @@ export class Zkopru extends Contract {
 
     stagedSize(): TransactionObject<string>
 
+    stakedOf(_account: string): TransactionObject<string>
+
+    totalStaked(): TransactionObject<string>
+
     transferOwnership(newOwner: string): TransactionObject<void>
 
     utxoRootOf(header: string | number[]): TransactionObject<string>
 
     validators(arg0: string | number[]): TransactionObject<string>
+
+    watchTower(): TransactionObject<string>
 
     withdrawalRootOf(header: string | number[]): TransactionObject<string>
 
@@ -183,6 +215,8 @@ export class Zkopru extends Contract {
     allowMigrants(migrants: string[]): TransactionObject<void>
 
     completeSetup(): TransactionObject<void>
+
+    makeTokamak(addr: string): TransactionObject<void>
   }
 
   events: {

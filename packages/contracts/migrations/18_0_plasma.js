@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 const { createCurrency } = require('@makerdao/currency')
 const fs = require('fs')
+const { toBN } = require('web3-utils')
 const save = require('../utils/save_deployed')
 const load = require('../utils/load_deployed')
-const { toBN } = require('web3-utils')
 
 const _WTON = createCurrency('WTON')
 
@@ -244,8 +244,8 @@ module.exports = async function(deployer, network) {
     seigManager = await SeigManager.at(seigManagerAddress)
     await depositManager.setSeigManager(seigManagerAddress)
     await wton.setSeigManager(seigManagerAddress)
-    //await wton.addMinter(seigManagerAddress)
-    //await ton.addMinter(wtonAddress)
+    // await wton.addMinter(seigManagerAddress)
+    // await ton.addMinter(wtonAddress)
 
     await seigManager.setPowerTONSeigRate(toBN('100000000000000000000000000'))
     await seigManager.setDaoSeigRate(toBN('500000000000000000000000000'))

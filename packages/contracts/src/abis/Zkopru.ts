@@ -2,54 +2,6 @@ export const ZkopruABI = [
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'ClaimedReward',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'deployer',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'zkopru',
-        type: 'address',
-      },
-      { indexed: false, internalType: 'string', name: 'name', type: 'string' },
-    ],
-    name: 'ConnectTokamak',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'DecreasedReward',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
       {
         indexed: false,
         internalType: 'bytes32',
@@ -81,33 +33,6 @@ export const ZkopruABI = [
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'IncreasedReward',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: '_newOperator',
-        type: 'address',
-      },
-    ],
-    name: 'OperatorChanged',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
       {
         indexed: true,
         internalType: 'address',
@@ -124,13 +49,14 @@ export const ZkopruABI = [
     name: 'OwnershipTransferred',
     type: 'event',
   },
-  { stateMutability: 'payable', type: 'fallback' },
+  { stateMutability: 'payable', type: 'fallback', payable: true },
   {
     inputs: [],
     name: 'CHALLENGE_PERIOD',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -138,6 +64,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -145,6 +72,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -152,6 +80,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -159,6 +88,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -166,6 +96,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -173,6 +104,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -180,6 +112,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -187,6 +120,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -194,6 +128,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -201,6 +136,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -208,6 +144,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -215,6 +152,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -222,6 +160,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -229,6 +168,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'address', name: '', type: 'address' }],
@@ -236,15 +176,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: '_newOperator', type: 'address' },
-    ],
-    name: 'changeOperator',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    constant: true,
   },
   {
     inputs: [
@@ -254,13 +186,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'conenctTokamak',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -268,12 +194,21 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
     name: 'currentFork',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
+    stateMutability: 'pure',
+    type: 'function',
+    constant: true,
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'finalizeReward',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -282,6 +217,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'bytes32', name: 'utxoRoot', type: 'bytes32' }],
@@ -289,6 +225,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -296,6 +233,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [
@@ -312,6 +250,7 @@ export const ZkopruABI = [
     ],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -319,6 +258,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [
@@ -328,15 +268,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: 'proposerAddr', type: 'address' },
-    ],
-    name: 'isProposableTokamak',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'view',
-    type: 'function',
+    constant: true,
   },
   {
     inputs: [
@@ -347,6 +279,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -354,22 +287,23 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
     name: 'l2RewardManager',
-    outputs: [
-      { internalType: 'contract IL2RewardManager', name: '', type: 'address' },
-    ],
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
-    inputs: [{ internalType: 'uint256', name: 'forkNumber', type: 'uint256' }],
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     name: 'lastEpoch',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
+    stateMutability: 'pure',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -377,6 +311,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'address', name: 'coordinator', type: 'address' }],
@@ -384,15 +319,15 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
     name: 'layer2Registry',
-    outputs: [
-      { internalType: 'contract ILayer2Registry', name: '', type: 'address' },
-    ],
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -400,13 +335,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'memo',
-    outputs: [{ internalType: 'string', name: '', type: 'string' }],
-    stateMutability: 'view',
-    type: 'function',
+    constant: true,
   },
   {
     inputs: [
@@ -416,6 +345,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -423,6 +353,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -430,6 +361,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'bytes32', name: 'header', type: 'bytes32' }],
@@ -437,6 +369,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'bytes32', name: 'proposalId', type: 'bytes32' }],
@@ -448,6 +381,14 @@ export const ZkopruABI = [
     ],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'proposeReward',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
@@ -455,6 +396,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'address', name: 'addr', type: 'address' }],
@@ -466,6 +408,7 @@ export const ZkopruABI = [
     ],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'bytes4', name: '', type: 'bytes4' }],
@@ -473,6 +416,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'address', name: 'tokenAddr', type: 'address' }],
@@ -480,6 +424,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'address', name: 'tokenAddr', type: 'address' }],
@@ -487,6 +432,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -496,32 +442,28 @@ export const ZkopruABI = [
     type: 'function',
   },
   {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'reward',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+    constant: true,
+  },
+  {
     inputs: [],
     name: 'rewards',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
     name: 'seigManager',
-    outputs: [
-      { internalType: 'contract ISeigManager', name: '', type: 'address' },
-    ],
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: '_layer2Registry', type: 'address' },
-      { internalType: 'address', name: '_seigManager', type: 'address' },
-      { internalType: 'address', name: '_l2RewardManager', type: 'address' },
-      { internalType: 'address', name: '_watchTower', type: 'address' },
-    ],
-    name: 'setTokamakConnector',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'bytes32', name: 'headerHash', type: 'bytes32' }],
@@ -529,6 +471,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -539,6 +482,7 @@ export const ZkopruABI = [
     ],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -546,6 +490,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'address', name: '_account', type: 'address' }],
@@ -553,6 +498,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -562,6 +508,7 @@ export const ZkopruABI = [
     ],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'address', name: 'newOwner', type: 'address' }],
@@ -571,18 +518,12 @@ export const ZkopruABI = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'updateSeigniorage',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     inputs: [{ internalType: 'bytes32', name: 'header', type: 'bytes32' }],
     name: 'utxoRootOf',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'bytes4', name: '', type: 'bytes4' }],
@@ -590,15 +531,15 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
     name: 'watchTower',
-    outputs: [
-      { internalType: 'contract IWatchTower', name: '', type: 'address' },
-    ],
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'bytes32', name: 'header', type: 'bytes32' }],
@@ -606,6 +547,7 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'bytes32', name: 'leaf', type: 'bytes32' }],
@@ -613,8 +555,9 @@ export const ZkopruABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
-  { stateMutability: 'payable', type: 'receive' },
+  { stateMutability: 'payable', type: 'receive', payable: true },
   {
     inputs: [
       { internalType: 'uint8', name: 'numOfInputs', type: 'uint8' },
@@ -741,6 +684,13 @@ export const ZkopruABI = [
   {
     inputs: [],
     name: 'completeSetup',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'addr', type: 'address' }],
+    name: 'makeTokamak',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',

@@ -21,6 +21,7 @@ export interface Config {
   seedKeystore?: EncryptedWallet
   password?: string
   numberOfAccounts?: number
+  logFile: string
 }
 
 export enum Menu {

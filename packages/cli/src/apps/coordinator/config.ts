@@ -8,5 +8,5 @@ export const DEFAULT = {
   maxBid: 10000,
   daemon: false,
   vhosts: 'localhost,127.0.0.1',
-  logFile: 'COORDINATOR_LOG_2',
+  logFile: 'COORDINATOR_LOG',
 }

@@ -21,6 +21,5 @@ module.exports = function migration(deployer, network, accounts) {
       name: 'Zkopru',
       address: zkopru.address,
     })
-
   })
 }

@@ -53,6 +53,8 @@ export class ISetupWizard extends Contract {
     allowMigrants(migrants: string[]): TransactionObject<void>
 
     completeSetup(): TransactionObject<void>
+
+    makeTokamak(addr: string): TransactionObject<void>
   }
 
   events: {

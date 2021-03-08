@@ -91,9 +91,6 @@ const infoZkopru = async account => {
   const totalStaked = await contract.methods.totalStaked().call()
   const stakedOf = await contract.methods.stakedOf(proposer).call()
 
-  const isProposableTokamak = await contract.methods.isProposableTokamak(proposer).call()
-
-
   console.log('zkopruAddress', zkopruAddress)
   console.log('proposer', proposer)
   console.log('genesis', genesis)
@@ -107,7 +104,6 @@ const infoZkopru = async account => {
   console.log('proposers', proposers)
   console.log('totalStaked', totalStaked)
   console.log('stakedOf', stakedOf)
-  console.log('isProposableTokamak', isProposableTokamak)
 }
 
 const sendRawTransaction = (txData, addressFrom, privateKey) =>
@@ -176,26 +172,31 @@ const deposit = async (_privateKey, layer2Address, account, tonAmount) => {
   console.log('afterBalance', toBN(afterBalance).toString())
   // beforeBalance.sub(afterBalance).should.be.bignumber.equal(tonAmount)
 }
-// tonMint(addressFrom, privateKey, TON_OPERATOR_STAKING_AMOUNT.toFixed(TON_UNIT))
-balanceOfTON(addressFrom)
+
+const to = '0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0'
+const toPriv =
+  '6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1'
+// tonMint(to, privateKey, TON_OPERATOR_STAKING_AMOUNT.toFixed(TON_UNIT))
+// balanceOfTON(to)
 
 /// staking to tokamak
 /*
 deposit(
-  privateKey,
+  toPriv,
   load(network, 'Zkopru'),
-  addressFrom,
+  to,
   TON_OPERATOR_STAKING_AMOUNT.toFixed(TON_UNIT),
 )
+
+balanceOfTON(to)
 */
-// main(addressFrom)
+// main(to)
 
-main('0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0')
-
-/*
 const accountInfo = async () => {
-  let info = await web3.eth.accounts.encrypt('0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1', 'helloworld')
+  const info = await web3.eth.accounts.encrypt(
+    '6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c',
+    'helloworld',
+  )
   console.log('info', info)
 }
 accountInfo()
-*/

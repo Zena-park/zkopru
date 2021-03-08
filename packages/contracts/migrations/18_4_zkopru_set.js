@@ -22,6 +22,7 @@ const Migratable = artifacts.require('Migratable')
 const Configurable = artifacts.require('Configurable')
 const BurnAuction = artifacts.require('BurnAuction')
 const Zkopru = artifacts.require('Zkopru')
+const TokamakConnector = artifacts.require('TokamakConnector')
 
 const instances = {}
 
@@ -136,6 +137,13 @@ module.exports = function migration(deployer, network, accounts) {
     const auctionZkopru = await instances.burnAuction.zkopru()
     console.log(`burnAuction.zkopru:\n${auctionZkopru}`)
 
+    // tokamakConnect
+    instances.tokamakConnector = await TokamakConnector.deployed()
+    save(network, {
+      name: 'TokamakConnector',
+      address: instances.tokamakConnector.address,
+    })
+
     // Setup proxy
     await zkopru.makeCoordinatable(instances.coordinatable.address)
     await zkopru.makeUserInteractable(instances.ui.address)
@@ -151,6 +159,8 @@ module.exports = function migration(deployer, network, accounts) {
     )
     await zkopru.makeMigratable(instances.migratable.address)
     await zkopru.makeConfigurable(instances.configurable.address)
+    await zkopru.makeTokamak(instances.tokamakConnector.address)
+    console.log('zkopru tokamakConnector done ')
 
     /// ======================
     // Setup zkSNARKs
@@ -211,6 +221,5 @@ module.exports = function migration(deployer, network, accounts) {
     // ===========================
     await zkopru.completeSetup()
     console.log('zkopru completeSetup done')
-
   })
 }

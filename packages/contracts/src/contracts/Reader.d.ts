@@ -47,9 +47,21 @@ export class Reader extends Contract {
 
     WITHDRAWAL_TREE_DEPTH(): TransactionObject<string>
 
+    accumulatedReward(): TransactionObject<string>
+
     allowedMigrants(arg0: string): TransactionObject<boolean>
 
     consensusProvider(): TransactionObject<string>
+
+    isLayer2(): TransactionObject<boolean>
+
+    isZkopru(): TransactionObject<boolean>
+
+    l2RewardManager(): TransactionObject<string>
+
+    layer2Registry(): TransactionObject<string>
+
+    operator(): TransactionObject<string>
 
     owner(): TransactionObject<string>
 
@@ -57,9 +69,15 @@ export class Reader extends Contract {
 
     renounceOwnership(): TransactionObject<void>
 
+    rewards(): TransactionObject<string>
+
+    seigManager(): TransactionObject<string>
+
     transferOwnership(newOwner: string): TransactionObject<void>
 
     validators(arg0: string | number[]): TransactionObject<string>
+
+    watchTower(): TransactionObject<string>
 
     genesis(): TransactionObject<string>
 
@@ -142,12 +160,26 @@ export class Reader extends Contract {
 
     latestProposalBlock(coordinator: string): TransactionObject<string>
 
-    isProposable(proposerAddr: string): TransactionObject<boolean>
-
     isValidRef(
       l2BlockHash: string | number[],
       ref: number | string,
     ): TransactionObject<boolean>
+
+    isProposable(proposerAddr: string): TransactionObject<boolean>
+
+    reward(account: string): TransactionObject<string>
+
+    totalStaked(): TransactionObject<string>
+
+    stakedOf(_account: string): TransactionObject<string>
+
+    proposeReward(account: string): TransactionObject<void>
+
+    finalizeReward(account: string): TransactionObject<void>
+
+    currentFork(): TransactionObject<string>
+
+    lastEpoch(arg0: number | string): TransactionObject<string>
   }
 
   events: {

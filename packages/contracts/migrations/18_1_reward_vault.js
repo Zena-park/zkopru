@@ -10,7 +10,7 @@ module.exports = async function migration(deployer, network) {
 
   const ton = load(network, "TON");
   const wton = load(network, "WTON");
-
+  
   await deployer.deploy(L2RewardVault, ton, wton).then(_l2RewardVault => {
     l2RewardVault = _l2RewardVault
   })

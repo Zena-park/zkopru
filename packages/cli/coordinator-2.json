@@ -1,0 +1,35 @@
+{"_":[],
+    "logFile":"COORDINATOR_LOG_2",
+    "bootstrap":true,
+    "b":true,
+    "ws":"ws://localhost:5000",
+    "websocket":"ws://localhost:5000",
+    "address":"0xb4aB2D2256E3b6b635Bc92830a1561834b248864",
+    "a":"0xb4aB2D2256E3b6b635Bc92830a1561834b248864",
+    "db":"db",
+    "maxBytes":131072,
+    "max-bytes":131072,
+    "priceMultiplier":48,
+    "price-multiplier":48,
+    "port":8081,
+    "$0":"zkopru-coordinator",
+    "keystore":
+    {"version":3,"id":"8494801c-7d92-4fa6-8425-3117f850d18f",
+        "address":"22d491bde2303f2f43325b2108d26f1eaba1e32b",
+        "crypto":{
+            "ciphertext":"31ca9ec90f876b9aad5f8fa4bf9879c454d0448208b5a51df5d636889992380b",
+            "cipherparams":{"iv":"b6786b328123986800588911657260aa"},
+            "cipher":"aes-128-ctr",
+            "kdf":"scrypt",
+            "kdfparams":{
+                "dklen":32,
+                "salt":"944569b081d5bba1f19ca46b96609a9160c7e0aaa0965ee8dc88e7bfece40eb8",
+                "n":8192,
+                "r":8,
+                "p":1
+            },
+            "mac":"e00c38ab51450503836cb49371e9a32331349f049005ad3f4cb5f4cb90ded77f"
+        }
+    },
+    "password":"helloworld"
+}

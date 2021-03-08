@@ -68,8 +68,8 @@ export class AuctionMonitor {
 
   constructor(node: FullNode, account: Account, config: AuctionMonitorConfig) {
     this.node = node
-    this.currentProposer = '0x0000000000000000000000000000000000000000'
-    this.consensusAddress = '0x0000000000000000000000000000000000000000'
+    this.currentProposer = '0x970e8f18ebfEa0B08810f33a5A40438b9530FBCF'
+    this.consensusAddress = '0xaf5C4C6C7920B4883bC6252e9d9B8fE27187Cf68'
     this.account = account
     this.port = config.port
     this.maxBid = new BN(config.maxBid.toString()).mul(new BN(`${10 ** 9}`))

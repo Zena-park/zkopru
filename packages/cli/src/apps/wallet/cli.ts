@@ -9,8 +9,9 @@ import { WalletDashboard } from './app'
 import { argv } from './parser'
 
 const main = async () => {
-  const writeStream = fs.createWriteStream('./WALLET_LOG')
-  logStream.addStream(writeStream)
+  // const writeStream = fs.createWriteStream('./WALLET_LOG')
+  // logStream.addStream(writeStream)
+
   // blessed.screen.render()
   let config: Config = argv
   if (argv.config) {
@@ -21,6 +22,10 @@ const main = async () => {
     if (!config.seedKeystore)
       throw Error('You should setup the keystore in the config file')
   }
+  console.log(`config : ${config}  `)
+  const writeStream = fs.createWriteStream(config.logFile)
+  logStream.addStream(writeStream)
+
   const zkWallet = await getZkWallet(config)
   if (!zkWallet) return
   const dashboard = new WalletDashboard(zkWallet, () => process.exit())

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-License-Identifier: MIT
 pragma solidity = 0.6.12;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
@@ -48,7 +48,7 @@ contract L2RewardManager is AccessControl {
         rewardPerProposal = 1000000000000000000;
         rewardPerFinalize = 1000000000000000000;
         rewardPerValidate = 1000000000000000000;
-        minimumForProposal = 100000000000000000000;
+        minimumForProposal = 100000000000000000000000000000;
 
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }

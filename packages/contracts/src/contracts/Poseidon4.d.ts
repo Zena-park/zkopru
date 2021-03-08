@@ -19,7 +19,7 @@ export class Poseidon4 extends Contract {
   clone(): Poseidon4
 
   methods: {
-    poseidon(arg0: (number | string)[]): TransactionObject<string>
+    poseidon(input: (number | string)[]): TransactionObject<string>
   }
 
   events: {

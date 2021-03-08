@@ -10,8 +10,10 @@ import { SNARK } from "./libraries/SNARK.sol";
 import { Blockchain, Header, Types } from "./libraries/Types.sol";
 import { Pairing, G1Point, G2Point } from "./libraries/Pairing.sol";
 import { Hash } from "./libraries/Hash.sol";
-import { TokamakConnector } from "../connection/TokamakConnector.sol";
-contract Zkopru is Proxy, Reader, ISetupWizard, TokamakConnector {
+
+/* solium-disable */
+
+contract Zkopru is Proxy, Reader, ISetupWizard {
     using Types for Header;
     using Types for Blockchain;
 
@@ -160,6 +162,13 @@ contract Zkopru is Proxy, Reader, ISetupWizard, TokamakConnector {
             block.number,
             parentBlock
         );
+    }
+
+    /**
+     * @dev It connects this proxy contract to the TokamakConnect controller.
+     */
+    function makeTokamak(address addr) public override onlyOwner {
+        Proxy._connectTokamak(addr);
     }
 
 }

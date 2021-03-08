@@ -94,13 +94,14 @@ export const WatchTowerProxyABI = [
     name: 'Upgraded',
     type: 'event',
   },
-  { stateMutability: 'payable', type: 'fallback' },
+  { stateMutability: 'payable', type: 'fallback', payable: true },
   {
     inputs: [],
     name: 'DEFAULT_ADMIN_ROLE',
     outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'bytes32', name: 'role', type: 'bytes32' }],
@@ -108,6 +109,7 @@ export const WatchTowerProxyABI = [
     outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [
@@ -118,6 +120,7 @@ export const WatchTowerProxyABI = [
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'bytes32', name: 'role', type: 'bytes32' }],
@@ -125,6 +128,7 @@ export const WatchTowerProxyABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [
@@ -145,6 +149,7 @@ export const WatchTowerProxyABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -154,6 +159,7 @@ export const WatchTowerProxyABI = [
     ],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -161,6 +167,7 @@ export const WatchTowerProxyABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [
@@ -190,6 +197,7 @@ export const WatchTowerProxyABI = [
     ],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'bytes4', name: 'interfaceId', type: 'bytes4' }],
@@ -197,6 +205,7 @@ export const WatchTowerProxyABI = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [],
@@ -204,6 +213,7 @@ export const WatchTowerProxyABI = [
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
   {
     inputs: [{ internalType: 'bool', name: '_pause', type: 'bool' }],
@@ -225,5 +235,6 @@ export const WatchTowerProxyABI = [
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
+    constant: true,
   },
 ]

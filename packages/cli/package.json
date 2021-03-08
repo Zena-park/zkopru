@@ -29,10 +29,8 @@
     "test:ci": "jest --coverage --ci --reporters='jest-junit'",
     "coverage": "jest --coverage",
     "coverage:show": "live-server coverage",
-    "wallet": "ts-node src/apps/wallet/cli.ts",
-    "coordinator": "ts-node src/apps/coordinator/cli.ts",
-    "dev:coordinator": "ts-node src/apps/coordinator/cli.ts --config coordinator.json",
-    "dev:wallet": "ts-node src/apps/wallet/cli.ts --config wallet.json"
+    "dev:coordinator": "ts-node src/apps/coordinator/cli.ts --config coordinator-2.json",
+    "dev:wallet": "ts-node src/apps/wallet/cli.ts --config wallet-2.json"
   },
   "dependencies": {
     "@zkopru/account": "file:../account",
@@ -55,8 +53,7 @@
     "node-ansiparser": "^2.2.0",
     "node-ansiterminal": "^0.2.1-beta",
     "node-fetch": "^2.6.0",
-    "pino-pretty": "^4.5.0",
-    "soltypes": "^1.3.5",
+    "soltypes": "^1.3.3",
     "tar": "^6.0.2",
     "web3": "^1.2.6",
     "web3-core": "^1.2.6",

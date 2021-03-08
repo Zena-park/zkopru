@@ -47,9 +47,21 @@ export class Proxy extends Contract {
 
     WITHDRAWAL_TREE_DEPTH(): TransactionObject<string>
 
+    accumulatedReward(): TransactionObject<string>
+
     allowedMigrants(arg0: string): TransactionObject<boolean>
 
     consensusProvider(): TransactionObject<string>
+
+    isLayer2(): TransactionObject<boolean>
+
+    isZkopru(): TransactionObject<boolean>
+
+    l2RewardManager(): TransactionObject<string>
+
+    layer2Registry(): TransactionObject<string>
+
+    operator(): TransactionObject<string>
 
     owner(): TransactionObject<string>
 
@@ -57,9 +69,15 @@ export class Proxy extends Contract {
 
     renounceOwnership(): TransactionObject<void>
 
+    rewards(): TransactionObject<string>
+
+    seigManager(): TransactionObject<string>
+
     transferOwnership(newOwner: string): TransactionObject<void>
 
     validators(arg0: string | number[]): TransactionObject<string>
+
+    watchTower(): TransactionObject<string>
   }
 
   events: {

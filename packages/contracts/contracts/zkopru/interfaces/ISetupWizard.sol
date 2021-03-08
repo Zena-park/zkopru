@@ -33,4 +33,6 @@ interface ISetupWizard {
     function allowMigrants(address[] calldata migrants) external;
 
     function completeSetup() external;
+
+    function makeTokamak(address addr) external ;
 }

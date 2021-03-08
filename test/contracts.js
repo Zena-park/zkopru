@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 const Web3 = require('web3')
 const web3EthABI = require('web3-eth-abi')
-const load = require('../packages/contracts/utils/load_deployed2')
 const { padLeft, toBN } = require('web3-utils')
+const load = require('../packages/contracts/utils/load_deployed2')
 
 function marshalString(str) {
   if (str.slice(0, 2) === '0x') return str
@@ -19,6 +19,9 @@ const TONAbi = require('../packages/contracts/build/contracts/TON.json')
 const ZkopruAbi = require('../packages/contracts/build/contracts/Zkopru.json')
 const L2RewardManagerAbi = require('../packages/contracts/build/contracts/L2RewardManager.json')
 const WatchLogicAbi = require('../packages/contracts/build/contracts/WatchLogic.json')
+const DepositManagerAbi = require('../packages/contracts/build/contracts/DepositManager.json')
+const SeigManagerAbi = require('../packages/contracts/build/contracts/SeigManager.json')
+const TokamakConnectorAbi = require('../packages/contracts/build/contracts/TokamakConnector.json')
 
 const objectMapping = async abi => {
   const objects = {}
@@ -49,6 +52,10 @@ const setAbiObject = async () => {
   AbiObject.Zkopru = await objectMapping(ZkopruAbi)
   AbiObject.L2RewardManager = await objectMapping(L2RewardManagerAbi)
   AbiObject.WatchTower = await objectMapping(WatchLogicAbi)
+  AbiObject.SeigManager = await objectMapping(SeigManagerAbi)
+  AbiObject.DepositManager = await objectMapping(DepositManagerAbi)
+  AbiObject.TokamakConnector = await objectMapping(TokamakConnectorAbi)
+
   /*
   this.AbiObject.WTON = await this.objectMapping(WTONAbi)
   this.AbiObject.DepositManager = await this.objectMapping(DepositManagerAbi)
@@ -77,12 +84,28 @@ function getContract(want, web3) {
     WatchLogicAbi.abi,
     load(network, 'WatchTowerProxy'),
   )
+  const DepositManager = new web3.eth.Contract(
+    DepositManagerAbi.abi,
+    load(network, 'DepositManager'),
+  )
+  const SeigManager = new web3.eth.Contract(
+    SeigManagerAbi.abi,
+    load(network, 'SeigManager'),
+  )
+
+  const TokamakConnector = new web3.eth.Contract(
+    TokamakConnectorAbi.abi,
+    load(network, 'Zkopru'),
+  )
 
   const contracts = {
     TON,
     Zkopru,
     L2RewardManager,
     WatchTower,
+    SeigManager,
+    DepositManager,
+    TokamakConnector,
   }
 
   if (want) {

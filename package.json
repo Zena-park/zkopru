@@ -44,9 +44,10 @@
     "lint:md": "markdownlint --ignore node_modules --ignore .git",
     "format": "yarn lint --fix",
     "format:md": "yarn lint:md --fix",
-    "husky-skip": "cross-env HUSKY_SKIP_HOOKS=1",
     "precommit": "lint-staged && lerna run --concurrency 1 --stream precommit --since HEAD",
     "commit": "git cz"
+  },
+  "husky": {
   },
   "lint-staged": {
     "linters": {
@@ -144,7 +145,8 @@
     "typechain": "^1.0.5",
     "typechain-target-web3-v1": "^1.0.4",
     "typescript": "3.8.3",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "@openzeppelin/contracts": "3.3.0"
   },
   "publishConfig": {
     "access": "public"

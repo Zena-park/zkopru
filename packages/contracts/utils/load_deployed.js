@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-module.exports = function (network, name) {
+module.exports = function(network, name) {
   const fileName = `deployed.${network}.json`
 
   if (!fs.existsSync(fileName)) return undefined

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field } from '@zkopru/babyjubjub'
 import { EventEmitter } from 'events'
 import { ZkTx } from '@zkopru/transaction'
@@ -20,7 +21,7 @@ import assert from 'assert'
 import AsyncLock from 'async-lock'
 import { Layer1 } from '@zkopru/contracts'
 import BN from 'bn.js'
-import fetch from 'node-fetch'
+// import fetch from 'node-fetch'
 import { BlockHeader } from 'web3-eth'
 import { TxMemPool } from './tx-pool'
 import { CoordinatorConfig, CoordinatorContext } from './context'
@@ -29,7 +30,7 @@ import { ProposerBase } from './middlewares/interfaces/proposer-base'
 import { BlockGenerator } from './middlewares/default/block-generator'
 import { BlockProposer } from './middlewares/default/block-proposer'
 import { CoordinatorApi } from './api'
-import { AuctionMonitor } from './auction-monitor'
+// import { AuctionMonitor } from './auction-monitor'
 
 export interface CoordinatorInterface {
   start: () => void
@@ -76,7 +77,7 @@ export class Coordinator extends EventEmitter {
     this.context = {
       account,
       node,
-      auctionMonitor: new AuctionMonitor(node, account, config),
+      // auctionMonitor: new AuctionMonitor(node, account, config),
       txPool: new TxMemPool(),
       // eslint-disable-next-line prefer-object-spread
       config: Object.assign({ priceMultiplier: 32 }, config),
@@ -147,7 +148,7 @@ export class Coordinator extends EventEmitter {
     )
     this.context.node.start()
     await Promise.all([
-      this.context.auctionMonitor.start(),
+      // this.context.auctionMonitor.start(),
       this.startSubscribeGasPrice(),
     ])
     this.api.start()
@@ -168,7 +169,7 @@ export class Coordinator extends EventEmitter {
       this.taskRunners.blockFinalize.close(),
       this.taskRunners.massDepositCommit.close(),
       this.context.node.stop(),
-      this.context.auctionMonitor.stop(),
+      // this.context.auctionMonitor.stop(),
       this.api.stop(),
       this.stopGasPriceSubscription(),
     ])
@@ -290,17 +291,34 @@ export class Coordinator extends EventEmitter {
         )
         return
       }
+
       const isProposable = await this.layer1()
         .upstream.methods.isProposable(this.context.account.address)
         .call()
 
+      const totalStaked = await this.layer1()
+        .upstream.methods.totalStaked()
+        .call()
+
+      const stakedOf = await this.layer1()
+        .upstream.methods.stakedOf(this.context.account.address)
+        .call()
+      const zkopruAddress = await this.layer1().address
+
+      logger.trace(`zkopruAddress : ${zkopruAddress}`)
+      logger.trace(
+        `this.context.account.address : ${this.context.account.address}`,
+      )
+      logger.trace(`totalStaked : ${totalStaked}`)
+      logger.trace(`stakeOf : ${stakedOf}`)
       logger.trace(`layer1.isProposable : ${isProposable}`)
 
       if (isProposable) {
         await this.proposeBlock()
-      } else {
+      } /*
+      else {
         await this.forwardTxs()
-      }
+      } */
     })
   }
 
@@ -330,6 +348,7 @@ export class Coordinator extends EventEmitter {
     }
   }
 
+  /*
   private async forwardTxs() {
     const { auctionMonitor } = this.context
     logger.info(`Skipping block proposal: Not current round owner`)
@@ -350,7 +369,7 @@ export class Coordinator extends EventEmitter {
         body: tx.encode().toString('hex'),
       })
     }
-  }
+  } */
 
   async commitMassDepositTask(): Promise<TransactionReceipt | undefined> {
     const stagedDeposits = await this.layer1()

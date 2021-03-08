@@ -1,24 +1,20 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-License-Identifier: MIT
 pragma solidity = 0.6.12;
 
-import { ISeigManager } from "../interfaces/ISeigManager.sol";
-import { ILayer2Registry } from "../interfaces/ILayer2Registry.sol";
-import { IWatchTower } from "../interfaces/IWatchTower.sol";
-import { IL2RewardManager } from "../interfaces/IL2RewardManager.sol";
-import { ISeigManager } from "../interfaces/ISeigManager.sol";
+import "../lib/Types.sol";
 
 /// @title The storage that integrates zkopru and tokamak
 contract ZkopruTokamakStorage {
 
     address public operator;
-    string public memo;
+
     bool public constant isLayer2 = true;
     bool public constant isZkopru = true;
 
-    ILayer2Registry public layer2Registry;
-    ISeigManager public seigManager;
-    IL2RewardManager public l2RewardManager;
-    IWatchTower public watchTower;
+    address public layer2Registry;
+    address public seigManager;
+    address public l2RewardManager;
+    address public watchTower;
 
     uint256 public rewards;
     uint256 public accumulatedReward;
@@ -32,5 +28,13 @@ contract ZkopruTokamakStorage {
     modifier onlyOperator() {
         require(msg.sender == operator);
         _;
+    }
+    modifier nonZero(address _addr) {
+        require(_addr != address(0), "WatchLogic: zero address");
+        _;
+    }
+
+    constructor() public {
+        operator = msg.sender;
     }
 }

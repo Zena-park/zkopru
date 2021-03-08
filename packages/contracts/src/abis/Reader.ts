@@ -117,6 +117,13 @@ export const ReaderABI = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'accumulatedReward',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [{ internalType: 'address', name: '', type: 'address' }],
     name: 'allowedMigrants',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
@@ -126,6 +133,41 @@ export const ReaderABI = [
   {
     inputs: [],
     name: 'consensusProvider',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'isLayer2',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'isZkopru',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'l2RewardManager',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'layer2Registry',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'operator',
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
@@ -152,6 +194,20 @@ export const ReaderABI = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'rewards',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'seigManager',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [{ internalType: 'address', name: 'newOwner', type: 'address' }],
     name: 'transferOwnership',
     outputs: [],
@@ -161,6 +217,13 @@ export const ReaderABI = [
   {
     inputs: [{ internalType: 'bytes4', name: '', type: 'bytes4' }],
     name: 'validators',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'watchTower',
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
@@ -338,6 +401,16 @@ export const ReaderABI = [
   },
   {
     inputs: [
+      { internalType: 'bytes32', name: 'l2BlockHash', type: 'bytes32' },
+      { internalType: 'uint256', name: 'ref', type: 'uint256' },
+    ],
+    name: 'isValidRef',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
       { internalType: 'address', name: 'proposerAddr', type: 'address' },
     ],
     name: 'isProposable',
@@ -346,13 +419,54 @@ export const ReaderABI = [
     type: 'function',
   },
   {
-    inputs: [
-      { internalType: 'bytes32', name: 'l2BlockHash', type: 'bytes32' },
-      { internalType: 'uint256', name: 'ref', type: 'uint256' },
-    ],
-    name: 'isValidRef',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'reward',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalStaked',
+    outputs: [
+      { internalType: 'uint256', name: 'totalsupply', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: '_account', type: 'address' }],
+    name: 'stakedOf',
+    outputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'proposeReward',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'finalizeReward',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'currentFork',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'pure',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'lastEpoch',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'pure',
     type: 'function',
   },
 ]

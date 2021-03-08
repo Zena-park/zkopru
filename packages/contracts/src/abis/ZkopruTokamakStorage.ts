@@ -1,4 +1,5 @@
 export const ZkopruTokamakStorageABI = [
+  { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
   {
     inputs: [],
     name: 'accumulatedReward',
@@ -23,25 +24,14 @@ export const ZkopruTokamakStorageABI = [
   {
     inputs: [],
     name: 'l2RewardManager',
-    outputs: [
-      { internalType: 'contract IL2RewardManager', name: '', type: 'address' },
-    ],
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'layer2Registry',
-    outputs: [
-      { internalType: 'contract ILayer2Registry', name: '', type: 'address' },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'memo',
-    outputs: [{ internalType: 'string', name: '', type: 'string' }],
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -62,18 +52,14 @@ export const ZkopruTokamakStorageABI = [
   {
     inputs: [],
     name: 'seigManager',
-    outputs: [
-      { internalType: 'contract ISeigManager', name: '', type: 'address' },
-    ],
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'watchTower',
-    outputs: [
-      { internalType: 'contract IWatchTower', name: '', type: 'address' },
-    ],
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },

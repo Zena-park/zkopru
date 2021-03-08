@@ -5,6 +5,11 @@ export const { argv } = yargs
   .scriptName('zkopru-coordinator')
   .usage('$0 <command> [args]')
   .options({
+    logFile: {
+      type: 'string',
+      alias: 'a',
+      describe: `[COORDINATOR_LOG]`,
+    },
     address: {
       type: 'string',
       alias: 'a',

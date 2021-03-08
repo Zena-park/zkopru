@@ -24,13 +24,12 @@ const Migratable = artifacts.require('Migratable')
 const Configurable = artifacts.require('Configurable')
 const BurnAuction = artifacts.require('BurnAuction')
 const Zkopru = artifacts.require('Zkopru')
-
+const TokamakConnector = artifacts.require('TokamakConnector')
 const instances = {}
 
 module.exports = function migration(deployer, network, accounts) {
   deployer.then(async () => {
     const ZkopruAddress = load(network, 'Zkopru')
-    const zkopru = await Zkopru.at(ZkopruAddress)
 
     // plasma-evm
     const TON = load(network, 'TON')
@@ -43,18 +42,25 @@ module.exports = function migration(deployer, network, accounts) {
 
     const L2RewardManager = load(network, 'L2RewardManager')
     const WatchTowerProxy = load(network, 'WatchTowerProxy')
+    const TokamakConnectorAddress = load(network, 'TokamakConnector')
+
+    console.log('layer2Registry : ', layer2Registry)
+    console.log('SeigManager : ', SeigManager)
+    console.log('L2RewardManager : ', L2RewardManager)
+    console.log('WatchTowerProxy : ', WatchTowerProxy)
 
     const layer2RegistryContract = await Layer2Registry.at(layer2Registry)
+    const tokamakConnector = await TokamakConnector.at(ZkopruAddress)
 
     // ===========================
     // set tokamak config
-    await zkopru.setTokamakConnector(
+    await tokamakConnector.setTokamakConnector(
       layer2Registry,
       SeigManager,
       L2RewardManager,
       WatchTowerProxy,
     )
-    console.log('set tokamak config done')
+    console.log('set tokamakConnector config done')
 
     // registe zkopru to tokamak
     await layer2RegistryContract.registerAndDeployCoinage(
@@ -63,7 +69,7 @@ module.exports = function migration(deployer, network, accounts) {
     )
     console.log('registe zkopru to tokamak done')
 
-    await zkopru.conenctTokamak()
+    await tokamakConnector.connectWatchTower()
     console.log('conenctTokamak done')
   })
 }

@@ -7,6 +7,10 @@ export const { argv } = yargs
   .scriptName('zk-wizard')
   .usage('$0 <command> [args]')
   .options({
+    logFile: {
+      type: 'string',
+      default: DEFAULT.logFile,
+    },
     fullnode: {
       type: 'boolean',
       default: true,

@@ -1,6 +1,8 @@
-import chalk from 'chalk'
-import { logger, parseStringToUnit } from '@zkopru/utils'
-import { toWei, fromWei } from 'web3-utils'
+/* eslint-disable class-methods-use-this */
+// import chalk from 'chalk'
+// import { logger, parseStringToUnit } from '@zkopru/utils'
+import { logger } from '@zkopru/utils'
+// import { toWei, fromWei } from 'web3-utils'
 import App, { AppMenu, Context } from '..'
 
 export default class UpdateMaxBid extends App {
@@ -8,7 +10,7 @@ export default class UpdateMaxBid extends App {
 
   async run(context: Context): Promise<{ context: Context; next: number }> {
     logger.trace('UpdateMaxBid')
-
+    /*
     const { maxBid } = this.base.context.auctionMonitor
     const parsedGwei = fromWei(maxBid, 'gwei')
     this.print(chalk.blue(`Current max bid: ${parsedGwei.toString()} gwei`))
@@ -36,7 +38,8 @@ export default class UpdateMaxBid extends App {
           `New max bid: ${fromWei(amountWei, 'gwei').toString()} gwei`,
         ),
       )
-    }
+    } */
+
     return { context, next: AppMenu.TOP_MENU }
   }
 }

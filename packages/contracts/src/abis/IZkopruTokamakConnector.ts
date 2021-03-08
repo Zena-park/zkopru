@@ -21,12 +21,24 @@ export const IZkopruTokamakConnectorABI = [
     type: 'function',
   },
   {
-    inputs: [
-      { internalType: 'address', name: 'proposerAddr', type: 'address' },
-    ],
+    inputs: [{ internalType: 'address', name: 'proposer', type: 'address' }],
     name: 'isProposableTokamak',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'proposeReward',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'finalizeReward',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {

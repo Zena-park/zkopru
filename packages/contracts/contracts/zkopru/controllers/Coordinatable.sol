@@ -6,7 +6,7 @@ import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { IERC165 } from "@openzeppelin/contracts/introspection/IERC165.sol";
 import { Hash } from "../libraries/Hash.sol";
 import { IConsensusProvider } from "../../consensus/interfaces/IConsensusProvider.sol";
-import { IZkopruTokamakConnector } from "../../interfaces/IZkopruTokamakConnector.sol";
+import { IZkopru } from "../interfaces/IZkopru.sol";
 import {
     Header,
     Proposer,
@@ -99,6 +99,9 @@ contract Coordinatable is Storage {
         proposer.exitAllowance = block.number + CHALLENGE_PERIOD;
         // Freeze the latest mass deposit for the next block proposer
         commitMassDeposit();
+
+        IZkopru(address(this)).proposeReward(msg.sender);
+
         emit NewProposal(Storage.chain.proposedBlocks, currentBlockHash);
         Storage.chain.proposedBlocks++;
     }
@@ -130,8 +133,12 @@ contract Coordinatable is Storage {
      * @param // Block data without tx details
      */
     function finalize(bytes memory) public {
+        // Check permission
+        require(isProposable(msg.sender), "Not allowed to finalize");
+
         Finalization memory finalization = Deserializer.finalizationFromCalldataAt(0);
         Proposal storage proposal = Storage.chain.proposals[finalization.proposalChecksum];
+
         // Check requirements
         require(finalization.massDeposits.root() == finalization.header.depositRoot, "Submitted different deposit root");
         require(finalization.massMigrations.root() == finalization.header.migrationRoot, "Submitted different deposit root");
@@ -171,6 +178,9 @@ contract Coordinatable is Storage {
         Storage.chain.finalized[proposal.headerHash] = true;
         Storage.chain.finalizedUTXORoots[finalization.header.utxoRoot] = true;
         Storage.chain.latest = proposal.headerHash;
+
+        IZkopru(address(this)).finalizeReward(msg.sender);
+
         emit Finalized(proposal.headerHash);
         delete Storage.chain.proposals[finalization.proposalChecksum];
     }
@@ -270,7 +280,7 @@ contract Coordinatable is Storage {
         }
     }*/
     function isProposable(address proposerAddr) public view returns (bool) {
-        return IZkopruTokamakConnector(address(this)).isProposableTokamak(proposerAddr);
+        return IZkopru(address(this)).isProposable(proposerAddr);
     }
 }
 

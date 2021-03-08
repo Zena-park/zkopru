@@ -3,10 +3,11 @@ export const DEFAULT = {
   networkId: 1,
   chainId: 1,
   websocket: 'ws://goerli.zkopru.network:8546',
-  coordinator: 'https://coordinator.zkopru.network',
+  coordinator: 'http://localhost:8081',
   snarkkeys: 'https://zkopru.azureedge.net/snarkkeys/burrito/040946c7/keys.tgz',
   maxBytes: 131072,
   priceMultiplier: 48,
-  port: 8888,
+  port: 8081,
   maxBid: 20000,
+  logFile: 'WALLET_LOG',
 }

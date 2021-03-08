@@ -13,8 +13,8 @@ import { IUtxoTreeValidator } from "./interfaces/validators/IUtxoTreeValidator.s
 import { IWithdrawalTreeValidator } from "./interfaces/validators/IWithdrawalTreeValidator.sol";
 import { INullifierTreeValidator } from "./interfaces/validators/INullifierTreeValidator.sol";
 import { ITxValidator } from "./interfaces/validators/ITxValidator.sol";
-
 import { ZkopruTokamakStorage } from "../connection/ZkopruTokamakStorage.sol";
+import { ITokamakConnector } from "../interfaces/ITokamakConnector.sol";
 
 /* solium-disable */
 
@@ -145,5 +145,24 @@ contract Proxy is Storage, ZkopruTokamakStorage {
 
     function _connectValidator(address to, bytes4 sig) internal {
         validators[sig] = to;
+    }
+
+    //
+    function _connectTokamak(address addr) internal {
+        _connect(addr, ITokamakConnector(0).isZkopru.selector);
+        _connect(addr, ITokamakConnector(0).isZkopru.selector);
+        _connect(addr, ITokamakConnector(0).updateSeiginorage.selector);
+        _connect(addr, ITokamakConnector(0).connectWatchTower.selector);
+        _connect(addr, ITokamakConnector(0).isProposableTokamak.selector);
+        _connect(addr, ITokamakConnector(0).proposeReward.selector);
+        _connect(addr, ITokamakConnector(0).finalizeReward.selector);
+        _connect(addr, ITokamakConnector(0).operator.selector);
+        _connect(addr, ITokamakConnector(0).isLayer2.selector);
+        _connect(addr, ITokamakConnector(0).currentFork.selector);
+        _connect(addr, ITokamakConnector(0).lastEpoch.selector);
+        _connect(addr, ITokamakConnector(0).changeOperator.selector);
+        _connect(addr, ITokamakConnector(0).totalStaked.selector);
+        _connect(addr, ITokamakConnector(0).stakedOf.selector);
+        _connect(addr, ITokamakConnector(0).setTokamakConnector.selector);
     }
 }

@@ -7,7 +7,7 @@ import { Bytes32 } from 'soltypes'
 import { Field } from '@zkopru/babyjubjub'
 import { BootstrapData } from '@zkopru/core'
 import { TxUtil } from '@zkopru/contracts'
-import fetch from 'node-fetch'
+// import fetch from 'node-fetch'
 import { CoordinatorContext } from './context'
 import { ClientApi } from './client-api'
 
@@ -155,7 +155,8 @@ export class CoordinatorApi {
   private txHandler: RequestHandler = async (req, res) => {
     const txData = req.body
     logger.info(`tx data ${typeof txData} ${txData}`)
-    const { auctionMonitor } = this.context
+    // const { auctionMonitor } = this.context
+    /*
     if (!auctionMonitor.isProposable) {
       // forward the tx
       const url = await auctionMonitor.functionalCoordinatorUrl(
@@ -179,7 +180,7 @@ export class CoordinatorApi {
         res.status(500).send(err)
       }
       return
-    }
+    } */
     logger.info(`tx data is ${txData}`)
     logger.info(txData)
     const zkTx = ZkTx.decode(Buffer.from(txData, 'hex'))

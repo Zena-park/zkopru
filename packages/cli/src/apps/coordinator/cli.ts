@@ -14,10 +14,11 @@ import { CoordinatorDashboard } from './app'
 import { DEFAULT } from './config'
 
 const main = async () => {
-  const writeStream = fs.createWriteStream(DEFAULT.logFile)
-  logStream.addStream(writeStream)
+  // const writeStream = fs.createWriteStream('COORDINATOR_LOG')
+  // logStream.addStream(writeStream)
   const config: Config = {} as Config
   Object.assign(config, DEFAULT)
+
   if (typeof argv.generateConfig !== 'undefined') {
     // write a sample config file
     const shortPath = argv.generateConfig || './config.json'
@@ -38,8 +39,14 @@ const main = async () => {
     const configFile = JSON.parse(
       fs.readFileSync(makePathAbsolute(argv.config)).toString('utf8'),
     )
+    console.log(`configFile : ${configFile}`)
+
     Object.assign(config, configFile)
   }
+  console.log(`config : ${config}  `)
+  const writeStream = fs.createWriteStream(config.logFile)
+  logStream.addStream(writeStream)
+  logger.info(`config : ${config}  `)
   // Let command line arguments override config file arguments
   Object.assign(config, argv)
   // Load keystore if needed

@@ -6,6 +6,7 @@ import { PromptApp } from '@zkopru/utils'
 import { Account, WebsocketProvider, EncryptedKeystoreV3Json } from 'web3-core'
 
 export interface Config {
+  logFile: string
   address: string
   bootstrap: boolean
   websocket: string

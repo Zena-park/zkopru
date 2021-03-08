@@ -1,11 +1,11 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-License-Identifier: MIT
 pragma solidity = 0.6.12;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "./WatchStorage.sol";
 
 import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
-import { IZkopruTokamakConnector } from "../interfaces/IZkopruTokamakConnector.sol";
+import { ITokamakConnector } from "../interfaces/ITokamakConnector.sol";
 
 contract WatchLogic is WatchStorage, AccessControl {
     using SafeMath for uint256;
@@ -61,7 +61,7 @@ contract WatchLogic is WatchStorage, AccessControl {
 
     function addZkopru(address _zkopru) public nonZero(msg.sender){
 
-        IZkopruTokamakConnector zkopru = IZkopruTokamakConnector(_zkopru);
+        ITokamakConnector zkopru = ITokamakConnector(_zkopru);
 
         require( zkopru.isZkopru(), "WatchTowerProxy: _zkopru is not zkopru" );
         require(

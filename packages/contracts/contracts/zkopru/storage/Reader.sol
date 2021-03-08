@@ -6,8 +6,14 @@ import { IConsensusProvider } from "../../consensus/interfaces/IConsensusProvide
 import { SNARK } from "../libraries/SNARK.sol";
 import { Storage } from "./Storage.sol";
 import { SMT254 } from "../libraries/SMT.sol";
+import { ZkopruTokamakStorage } from "../../connection/ZkopruTokamakStorage.sol";
 
-contract Reader is Storage {
+import { IL2RewardManager } from "../../interfaces/IL2RewardManager.sol";
+import { ISeigManager } from "../../interfaces/ISeigManager.sol";
+import { IWatchTower } from "../../interfaces/IWatchTower.sol";
+import { IERC20 } from  "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
+contract Reader is Storage, ZkopruTokamakStorage {
     function genesis() public view returns (bytes32) {
         return chain.genesis;
     }
@@ -123,7 +129,7 @@ contract Reader is Storage {
     /**
      * @dev Copy of `isProposable()` in Coordinatable.sol
      */
-    function isProposable(address proposerAddr) public view returns (bool) {
+    /*function isProposable(address proposerAddr) public view returns (bool) {
         Proposer memory  proposer = Storage.chain.proposers[proposerAddr];
         // You can add more consensus logic here
         if (proposer.stake >= MINIMUM_STAKE) {
@@ -131,7 +137,7 @@ contract Reader is Storage {
         } else {
             return false;
         }
-    }
+    }*/
 
     /**
      * @dev Copy of `isValidRef()` in TxValidator.sol
@@ -153,4 +159,80 @@ contract Reader is Storage {
         }
         return false;
     }
+
+    function isProposable(address proposerAddr)
+    public
+    view
+    returns (bool) {
+        Proposer memory  proposer = Storage.chain.proposers[proposerAddr];
+
+        if(IWatchTower(watchTower).isRegisteredZkopru(address(this))){
+            if(ISeigManager(seigManager).stakeOf(address(this), proposerAddr) >= IL2RewardManager(l2RewardManager).minimumForProposal())
+                return true;
+            else
+                return false;
+        }else{
+            return false;
+        }
+    }
+
+    function reward(address account)
+    public
+    view
+    returns (uint256) {
+        return rewardsAccount[account];
+    }
+
+    /// @notice Retrieves the total staked balance on this candidate
+    /// @return totalsupply Total staked amount on this candidate
+    function totalStaked()
+        external
+        view
+        returns (uint256 totalsupply)
+    {
+        address coinage = ISeigManager(seigManager).coinages(address(this));
+        require(coinage != address(0), "TokamakConnector: coinage is zero");
+        return IERC20(coinage).totalSupply();
+    }
+
+    function stakedOf(
+        address _account
+    )
+        external
+        view
+        returns (uint256 amount)
+    {
+        address coinage = ISeigManager(seigManager).coinages(address(this));
+        require(coinage != address(0), "TokamakConnector: coinage is zero");
+        return IERC20(coinage).balanceOf(_account);
+    }
+
+    function proposeReward(address account) external nonZero(l2RewardManager)
+    {
+        require(msg.sender == address(this), "TokamakConnector: proposeReward sender is not accept") ;
+        uint256 amount = IL2RewardManager(l2RewardManager).rewardPerProposal();
+        if (amount > 0) increaseReward(account, amount);
+    }
+
+    function finalizeReward(address account) external nonZero(l2RewardManager)
+    {
+        require(msg.sender == address(this), "ConnectRewardBase: finalizeReward sender is not accept") ;
+        uint256 amount = IL2RewardManager(l2RewardManager).rewardPerFinalize();
+        if (amount > 0) increaseReward(account, amount);
+    }
+
+    function increaseReward(address account, uint256 amount) internal
+    {
+        require(amount > 0, "TokamakConnector: _increaseReward amount is zero");
+        rewards += amount;
+        rewardsAccount[account] += amount;
+        accumulatedReward += amount;
+        accumulatedRewardAccount[account] += amount;
+        // emit IncreasedReward(account, amount);
+    }
+
+    /// For Layer2
+    function currentFork() external pure returns (uint256) { return 1; }
+    function lastEpoch(uint256 ) external pure returns (uint256){ return 1; }
+
 }
