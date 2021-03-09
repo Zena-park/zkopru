@@ -36,7 +36,7 @@ const { expect } = chai
 const network = 'testnet'
 const { mainModule } = require('process')
 const Tx = require('ethereumjs-tx').Transaction
-const load = require('../packages/contracts/utils/load_deployed2')
+const load = require('../contracts/utils/load_deployed')
 
 const _TON = createCurrency('TON')
 const _WTON = createCurrency('WTON')
@@ -49,16 +49,9 @@ const TON_PROPOSAL_STAKING_AMOUNT = _TON('100')
 const TON_OPERATOR_STAKING_AMOUNT = _TON('1000')
 
 const gasPrice = 20000000000
-const operator = '0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1'
-const operatorPrivateKey =
+const addressFrom = '0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1'
+const privateKey =
   '4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d'
-const aAddress = '0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0'
-const aPrivateKey =
-  '6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1'
-
-const bAddress = '0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b'
-const bPrivateKey =
-  '6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c'
 
 /// =========================
 const { getContract, setAbiObject } = require('./contracts')
@@ -66,7 +59,6 @@ const { getContract, setAbiObject } = require('./contracts')
 const ABIObject = setAbiObject()
 
 const infoL2RewardManager = async () => {
-  console.log(' ')
   console.log(' ====== L2RewardManager ================= ')
   const contract = getContract('L2RewardManager', web3)
 
@@ -79,9 +71,7 @@ const infoL2RewardManager = async () => {
   console.log('rewardPerValidate', rewardPerValidate)
   console.log('minimumForProposal', minimumForProposal)
 }
-
 const infoZkopru = async account => {
-  console.log(' ')
   console.log(' ====== Zkopru ================= ')
   const contract = getContract('Zkopru', web3)
 
@@ -95,11 +85,12 @@ const infoZkopru = async account => {
   const stagedDeposits = await contract.methods.stagedDeposits().call()
   const stagedSize = await contract.methods.stagedSize().call()
   const massDepositId = await contract.methods.massDepositId().call()
-  const isProposable = await contract.methods.isProposable(account).call()
+  const isProposable = await contract.methods.isProposable(zkopruAddress).call()
 
   const proposers = await contract.methods.proposers(proposer).call()
   const totalStaked = await contract.methods.totalStaked().call()
   const stakedOf = await contract.methods.stakedOf(proposer).call()
+
 
   console.log('zkopruAddress', zkopruAddress)
   console.log('proposer', proposer)
@@ -112,8 +103,8 @@ const infoZkopru = async account => {
   console.log('isProposable', isProposable)
 
   console.log('proposers', proposers)
-  console.log('totalStaked', _WTON.ray(totalStaked).toString())
-  console.log('stakedOf', _WTON.ray(stakedOf).toString())
+  console.log('totalStaked', totalStaked)
+  console.log('stakedOf', stakedOf)
 }
 
 const sendRawTransaction = (txData, addressFrom, privateKey) =>
@@ -136,7 +127,6 @@ const main = async account => {
 
 const send = async (_privateKey, gasPrice, transaction) => {
   const account = web3.eth.accounts.privateKeyToAccount(_privateKey).address
-
   const options = {
     to: transaction._parent._address,
     data: transaction.encodeABI(),
@@ -149,30 +139,24 @@ const send = async (_privateKey, gasPrice, transaction) => {
 }
 
 const tonMint = async (account, _privateKey, amount) => {
-  console.log(' ')
   const TonContract = getContract('TON', web3)
   const transaction = TonContract.methods.mint(account, amount)
   const receipt = await send(_privateKey, gasPrice, transaction)
-  console.log('tonMint done : ', account, _TON.wei(amount).toString())
-  const balance = await TonContract.methods.balanceOf(account).call()
-  console.log('balanceOf (', account, ') ', _TON.wei(balance).toString())
+  console.log('tonMint', receipt)
 }
 const balanceOfTON = async account => {
-  console.log(' ')
   const TonContract = getContract('TON', web3)
   const balance = await TonContract.methods.balanceOf(account).call()
-  console.log('balanceOf (', account, ') ', _TON.wei(balance).toString())
+  console.log('balanceOf (', account, ') ', toBN(balance).toString())
 }
 
 const deposit = async (_privateKey, layer2Address, account, tonAmount) => {
   const ton = await getContract('TON')
   const wton = load(network, 'WTON')
-  console.log(' ')
-  console.log(' ********* staking **************  ')
-  console.log(' layer2Address: ', layer2Address)
-  console.log(' tonAmount: ', _TON.wei(tonAmount).toString())
+
   const beforeBalance = await ton.methods.balanceOf(account).call()
-  console.log('beforeBalance', _TON.wei(beforeBalance).toString())
+  console.log('beforeBalance', toBN(beforeBalance).toString())
+  // beforeBalance.should.be.bignumber.gte(tonAmount)
 
   const data = marshalString(
     [load(network, 'DepositManager'), layer2Address]
@@ -183,108 +167,27 @@ const deposit = async (_privateKey, layer2Address, account, tonAmount) => {
   const transaction = ton.methods.approveAndCall(wton, tonAmount, data)
 
   const receipt = await send(_privateKey, gasPrice, transaction)
+  console.log('deposit', receipt)
 
   const afterBalance = await ton.methods.balanceOf(account).call()
-  console.log('afterBalance', _TON.wei(afterBalance).toString())
-
-  const seigManager = await getContract('SeigManager')
-  const balance = await seigManager.methods
-    .stakeOf(layer2Address, account)
-    .call()
-  console.log('stakedOf', _WTON.ray(balance).toString())
+  console.log('afterBalance', toBN(afterBalance).toString())
+  // beforeBalance.sub(afterBalance).should.be.bignumber.equal(tonAmount)
 }
+// console.log('privateKey', privateKey)
+// tonMint(addressFrom, privateKey) // 100 ton -> account
 
-const unstaking = async (_privateKey, layer2Address, account, wtonAmount) => {
-  const depositManager = await getContract('DepositManager')
-  const seigManager = await getContract('SeigManager')
-  console.log(' ')
-  console.log(' ********* unstaking **************  ')
-  console.log(' layer2Address: ', layer2Address)
-  const beforeBalance = await seigManager.methods
-    .stakeOf(layer2Address, account)
-    .call()
 
-  console.log('stakedOf before', _WTON.ray(beforeBalance).toString())
-  const transaction = depositManager.methods.requestWithdrawal(
-    layer2Address,
-    wtonAmount,
-  )
-  const receipt = await send(_privateKey, gasPrice, transaction)
 
-  const afterBalance = await seigManager.methods
-    .stakeOf(layer2Address, account)
-    .call()
-  console.log('stakedOf after', _WTON.ray(afterBalance).toString())
-}
+// tonMint(addressFrom, privateKey, TON_OPERATOR_STAKING_AMOUNT.toFixed(TON_UNIT))
+balanceOfTON(addressFrom)
 
-const rewardBalance = async account => {
-  const ton = await getContract('TON')
-  const zkopru = await getContract('Zkopru')
-  const rewards = await zkopru.methods.rewards().call()
-  const reward = await zkopru.methods.reward(account).call()
-  console.log(' ')
-  console.log(' ********* Zkopru Reward **************  ')
-  const balance = await ton.methods.balanceOf(account).call()
-  console.log(' your address  : ', account)
-  console.log(' your ton      : ', _TON.wei(balance).toString())
-  console.log(' reward        : ', _TON.wei(reward).toString())
-  console.log(' rewards total : ', _TON.wei(rewards).toString())
-}
-
-const claimReward1TON = async (_privateKey, account) => {
-  const tokamakConnector = await getContract('TokamakConnector')
-  const ton = await getContract('TON')
-  const zkopru = await getContract('Zkopru')
-  const TON_ONE_AMOUNT = _TON('1')
-  const rewards = await zkopru.methods.rewards().call()
-  const reward = await zkopru.methods.reward(account).call()
-  console.log(' ')
-  console.log(' ********* Zkopru claimReward Before **************  ')
-  const tonBalance = await ton.methods.balanceOf(account).call()
-  console.log(' your address  : ', account)
-  console.log(' your balance (before) : ', _TON.wei(tonBalance).toString())
-  console.log(' reward        : ', _TON.wei(reward).toString())
-  console.log(' rewards total : ', _TON.wei(rewards).toString())
-
-  const transaction = tokamakConnector.methods.claim(
-    TON_ONE_AMOUNT.toFixed(TON_UNIT),
-  )
-  const receipt = await send(_privateKey, gasPrice, transaction)
-  const rewards1 = await zkopru.methods.rewards().call()
-  const reward1 = await zkopru.methods.reward(account).call()
-  console.log(' ')
-  console.log(' ********* Zkopru claimReward Before **************  ')
-  const tonBalance1 = await ton.methods.balanceOf(account).call()
-  console.log(' your address  : ', account)
-  console.log(' your balance (before) : ', _TON.wei(tonBalance1).toString())
-  console.log(' reward        : ', _TON.wei(reward1).toString())
-  console.log(' rewards total : ', _TON.wei(rewards1).toString())
-}
-const setL2RewardManager = async () => {
-  const L2RewardVault = await getContract('L2RewardVault')
-  const L2RewardManager = load(network, 'L2RewardManager')
-
-  const transaction = L2RewardVault.methods.setL2RewardManager(L2RewardManager)
-  const receipt = await send(operatorPrivateKey, gasPrice, transaction)
-}
-
-module.exports = {
-  infoZkopru,
-  sendRawTransaction,
-  main,
-  send,
-  tonMint,
-  balanceOfTON,
-  deposit,
-  unstaking,
-  gasPrice,
-  operator,
-  operatorPrivateKey,
-  rewardBalance,
-  claimReward1TON,
-  aAddress,
-  aPrivateKey,
-  bAddress,
-  bPrivateKey,
-  setL2RewardManager,
-}
+/// staking to tokamak
+/*
+deposit(
+  privateKey,
+  load(network, 'Zkopru'),
+  addressFrom,
+  TON_OPERATOR_STAKING_AMOUNT.toFixed(TON_UNIT),
+)
+*/
+main(addressFrom)

@@ -43,7 +43,7 @@ contract TokamakConnector
         /// add zkopru, coordinatable  to watchTower
         IWatchTower(watchTower).addZkopru(address(this));
     }
-    /*
+
     /// For Layer2
     function currentFork() external pure returns (uint256) {
         return 1;
@@ -51,7 +51,7 @@ contract TokamakConnector
     function lastEpoch(uint256 ) external pure returns (uint256){
         return 1;
     }
-    */
+
     function changeOperator(address _newOperator) external onlyOperatorOrSeigManager {
         operator = _newOperator;
         emit OperatorChanged(_newOperator);
@@ -66,7 +66,6 @@ contract TokamakConnector
         return ISeigManager(seigManager).updateSeigniorage();
     }
 
-    /*
     /// @notice Retrieves the total staked balance on this candidate
     /// @return totalsupply Total staked amount on this candidate
     function totalStaked()
@@ -99,14 +98,21 @@ contract TokamakConnector
 
         return coinageAddress;
     }
-    */
-    function isProposableTokamak(address proposerAddr) public view returns (bool) {
-        require(IWatchTower(watchTower).isRegisteredZkopru(address(this)), "TokamakConnector: unregistered zkopru");
 
-        if(ISeigManager(seigManager).stakeOf(address(this), proposerAddr) >= IL2RewardManager(l2RewardManager).minimumForProposal())
-            return true;
-        else
+    function isProposable(address proposerAddr)
+    public
+    view
+    returns (bool) {
+        // Proposer memory  proposer = Storage.chain.proposers[proposerAddr];
+
+        if(IWatchTower(watchTower).isRegisteredZkopru(address(this))){
+            if(ISeigManager(seigManager).stakeOf(address(this), proposerAddr) >= IL2RewardManager(l2RewardManager).minimumForProposal())
+                return true;
+            else
+                return false;
+        }else{
             return false;
+        }
     }
 
 }

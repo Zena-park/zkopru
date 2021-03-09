@@ -61,13 +61,12 @@ const {
   operator,
   operatorPrivateKey,
   rewardBalance,
+  claimReward1TON,
   aAddress,
   aPrivateKey,
   bAddress,
   bPrivateKey,
+  setL2RewardManager,
 } = require('./demo.function')
 
-
-const TON_PROPOSAL_UNSTAKING_AMOUNT = _TON('50')
-
-rewardBalance(aAddress)
+claimReward1TON(aPrivateKey, aAddress)

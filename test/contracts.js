@@ -22,6 +22,7 @@ const WatchLogicAbi = require('../packages/contracts/build/contracts/WatchLogic.
 const DepositManagerAbi = require('../packages/contracts/build/contracts/DepositManager.json')
 const SeigManagerAbi = require('../packages/contracts/build/contracts/SeigManager.json')
 const TokamakConnectorAbi = require('../packages/contracts/build/contracts/TokamakConnector.json')
+const L2RewardVaultAbi = require('../packages/contracts/build/contracts/L2RewardVault.json')
 
 const objectMapping = async abi => {
   const objects = {}
@@ -55,6 +56,7 @@ const setAbiObject = async () => {
   AbiObject.SeigManager = await objectMapping(SeigManagerAbi)
   AbiObject.DepositManager = await objectMapping(DepositManagerAbi)
   AbiObject.TokamakConnector = await objectMapping(TokamakConnectorAbi)
+  AbiObject.L2RewardVault = await objectMapping(L2RewardVaultAbi)
 
   /*
   this.AbiObject.WTON = await this.objectMapping(WTONAbi)
@@ -98,6 +100,12 @@ function getContract(want, web3) {
     load(network, 'Zkopru'),
   )
 
+  const L2RewardVault = new web3.eth.Contract(
+    L2RewardVaultAbi.abi,
+    load(network, 'L2RewardVault'),
+  )
+
+
   const contracts = {
     TON,
     Zkopru,
@@ -106,6 +114,7 @@ function getContract(want, web3) {
     SeigManager,
     DepositManager,
     TokamakConnector,
+    L2RewardVault,
   }
 
   if (want) {
